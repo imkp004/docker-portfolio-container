@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kirtan Patel — DevOps Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0A0F1E;
+      --card:     #111827;
+      --border:   #1E2A3A;
+      --cyan:     #00D4FF;
+      --cyan-dim: #00A8CC;
+      --green:    #00FF94;
+      --text:     #F0F4FF;
+      --muted:    #8892A4;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; right: 5%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before { content: '> '; opacity: 0.5; }
+    h1 {
+      font-family: var(--mono);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    h1 span { color: var(--cyan); }
+    .hero-terminal {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--green);
+      margin-bottom: 2rem;
+      min-height: 1.6em;
+    }
+    .hero-terminal::after {
+      content: '▋';
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-label::before { content: '// '; opacity: 0.5; }
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+    .divider {
+      width: 48px; height: 2px;
+      background: var(--cyan);
+      margin: 0.75rem 0 3rem;
+    }
+
+    /* ── SKILLS GRID ── */
+    #skills { background: var(--card); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+    .skill-card-title {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      font-size: 0.8rem;
+      background: rgba(0,212,255,0.08);
+      color: var(--text);
+      border-radius: 2px;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid rgba(0,212,255,0.15);
+    }
+
+    /* ── EXPERIENCE TIMELINE ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0.5rem; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      padding-left: 2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -2rem; top: 0.45rem;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .timeline-meta {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .timeline-company {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--cyan);
+      letter-spacing: 0.08em;
+    }
+    .timeline-period {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .timeline-role {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .timeline-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .timeline-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pill {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(0,255,148,0.07);
+      color: var(--green);
+      border: 1px solid rgba(0,255,148,0.2);
+      border-radius: 2px;
+    }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { background: var(--card); }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .cert-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      transition: border-color 0.25s;
+    }
+    .cert-card:hover { border-color: var(--cyan); }
+    .cert-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .cert-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      max-width: 600px;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+    .edu-icon { font-size: 2.5rem; }
+    .edu-degree { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .edu-school { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); margin-bottom: 0.4rem; }
+    .edu-detail { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 4rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    footer span { color: var(--cyan); }
+
+    /* ── SCROLL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">kp@devops:~$</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Available for opportunities</p>
+    <h1>Kirtan<br /><span>Patel</span></h1>
+    <div class="hero-terminal" id="terminal-text"></div>
+    <p class="hero-desc">
+      DevOps Engineer with hands-on expertise building, automating, and scaling
+      cloud-native infrastructure. Passionate about CI/CD pipelines, container
+      orchestration, and reducing time-to-production for engineering teams.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">Docker</span>
+      <span class="badge">Kubernetes</span>
+      <span class="badge">Jenkins</span>
+      <span class="badge">AWS</span>
+      <span class="badge">Terraform</span>
+      <span class="badge">Ansible</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">Expertise</p>
+    <h2>Technical Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-card-title">Containerization</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Docker Compose</span>
+          <span class="skill-tag">Docker Swarm</span>
+          <span class="skill-tag">Dockerfile optimization</span>
+          <span class="skill-tag">Multi-stage builds</span>
+          <span class="skill-tag">Amazon ECR</span>
+          <span class="skill-tag">Docker Hub</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Orchestration</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">EKS</span>
+          <span class="skill-tag">Helm</span>
+          <span class="skill-tag">kubectl</span>
+          <span class="skill-tag">Deployments</span>
+          <span class="skill-tag">Services & Ingress</span>
+          <span class="skill-tag">ConfigMaps & Secrets</span>
+          <span class="skill-tag">HPA</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">CI/CD Pipelines</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">Jenkinsfile</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">GitLab CI</span>
+          <span class="skill-tag">ArgoCD</span>
+          <span class="skill-tag">Pipeline as Code</span>
+          <span class="skill-tag">Webhooks</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Cloud — AWS</div>
+        <div class="skill-tags">
+          <span class="skill-tag">EC2</span>
+          <span class="skill-tag">ECS</span>
+          <span class="skill-tag">EKS</span>
+          <span class="skill-tag">S3</span>
+          <span class="skill-tag">RDS</span>
+          <span class="skill-tag">IAM</span>
+          <span class="skill-tag">VPC</span>
+          <span class="skill-tag">CloudWatch</span>
+          <span class="skill-tag">ALB</span>
+          <span class="skill-tag">Lambda</span>
+          <span class="skill-tag">Route 53</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Infrastructure as Code</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">Ansible</span>
+          <span class="skill-tag">CloudFormation</span>
+          <span class="skill-tag">Packer</span>
+          <span class="skill-tag">Remote state</span>
+          <span class="skill-tag">Terraform modules</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Monitoring & Observability</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Prometheus</span>
+          <span class="skill-tag">Grafana</span>
+          <span class="skill-tag">ELK Stack</span>
+          <span class="skill-tag">CloudWatch</span>
+          <span class="skill-tag">Datadog</span>
+          <span class="skill-tag">Alertmanager</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Source Control & GitOps</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">GitLab</span>
+          <span class="skill-tag">Bitbucket</span>
+          <span class="skill-tag">GitOps workflows</span>
+          <span class="skill-tag">Branching strategies</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">OS & Scripting</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Linux (Amazon, Ubuntu, RHEL)</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Shell scripting</span>
+          <span class="skill-tag">Cron jobs</span>
+          <span class="skill-tag">systemd</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-title">Security & Networking</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Security Groups</span>
+          <span class="skill-tag">IAM roles & policies</span>
+          <span class="skill-tag">Secrets Manager</span>
+          <span class="skill-tag">SSL/TLS</span>
+          <span class="skill-tag">VPN</span>
+          <span class="skill-tag">RBAC (K8s)</span>
+          <span class="skill-tag">Trivy (image scanning)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <p class="section-label">Career</p>
+    <h2>Experience</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-company">TechNova Solutions</span>
+          <span class="timeline-period">Jan 2023 – Present</span>
+        </div>
+        <div class="timeline-role">Senior DevOps Engineer</div>
+        <p class="timeline-desc">
+          Led the migration of a monolithic application to a microservices architecture running on Amazon EKS, reducing deployment time from 2 hours to under 8 minutes. Architected and maintained CI/CD pipelines for 12 product teams using Jenkins and GitHub Actions. Designed Terraform modules adopted org-wide for provisioning AWS infrastructure, cutting environment spin-up time by 70%. Introduced Prometheus + Grafana observability stack with custom alerting, reducing mean time to detect (MTTD) incidents by 60%.
+        </p>
+        <div class="timeline-tech">
+          <span class="tech-pill">Kubernetes (EKS)</span>
+          <span class="tech-pill">Jenkins</span>
+          <span class="tech-pill">Terraform</span>
+          <span class="tech-pill">Docker</span>
+          <span class="tech-pill">AWS</span>
+          <span class="tech-pill">Helm</span>
+          <span class="tech-pill">Prometheus</span>
+          <span class="tech-pill">Grafana</span>
+          <span class="tech-pill">ArgoCD</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-company">CloudBridge Systems</span>
+          <span class="timeline-period">Jun 2021 – Dec 2022</span>
+        </div>
+        <div class="timeline-role">DevOps Engineer</div>
+        <p class="timeline-desc">
+          Built and maintained Docker-based CI/CD pipelines integrated with GitLab CI, automating build, test, and deployment stages for 8 applications. Managed Ansible playbooks for configuration management across 200+ Linux servers. Set up centralized logging with the ELK Stack, enabling the team to query 3 months of logs in real time. Collaborated with security teams to enforce IAM least-privilege policies and automated vulnerability scanning with Trivy.
+        </p>
+        <div class="timeline-tech">
+          <span class="tech-pill">Docker</span>
+          <span class="tech-pill">GitLab CI</span>
+          <span class="tech-pill">Ansible</span>
+          <span class="tech-pill">ELK Stack</span>
+          <span class="tech-pill">AWS EC2 / RDS</span>
+          <span class="tech-pill">Trivy</span>
+          <span class="tech-pill">Python</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-company">Infra Labs Pvt. Ltd.</span>
+          <span class="timeline-period">Aug 2020 – May 2021</span>
+        </div>
+        <div class="timeline-role">Junior DevOps / Systems Engineer</div>
+        <p class="timeline-desc">
+          Started career working on Linux server administration and basic automation. Wrote Bash scripts to automate routine server tasks (patching, log rotation, disk-space alerts). Assisted senior engineers in containerizing legacy PHP and Node.js applications with Docker. Set up Jenkins for the first time in the org, creating initial pipelines for automated builds and test runs.
+        </p>
+        <div class="timeline-tech">
+          <span class="tech-pill">Linux</span>
+          <span class="tech-pill">Bash</span>
+          <span class="tech-pill">Docker</span>
+          <span class="tech-pill">Jenkins</span>
+          <span class="tech-pill">Git</span>
+          <span class="tech-pill">Nginx</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-company">Self-directed Projects</span>
+          <span class="timeline-period">2019 – 2020</span>
+        </div>
+        <div class="timeline-role">DevOps Learner & Home Lab</div>
+        <p class="timeline-desc">
+          Built a multi-node Kubernetes cluster on bare-metal hardware at home to learn cluster administration hands-on. Deployed self-hosted services (Gitea, Nextcloud, monitoring stack) managed entirely through Helm and Terraform. Completed AWS Solutions Architect and DevOps-focused courses, earning first certifications and building the foundation for a DevOps career.
+        </p>
+        <div class="timeline-tech">
+          <span class="tech-pill">Kubernetes (kubeadm)</span>
+          <span class="tech-pill">Helm</span>
+          <span class="tech-pill">Terraform</span>
+          <span class="tech-pill">AWS (free tier)</span>
+          <span class="tech-pill">Raspberry Pi</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="reveal">
+    <p class="section-label">Credentials</p>
+    <h2>Certifications</h2>
+    <div class="divider"></div>
+    <div class="cert-grid">
+
+      <div class="cert-card">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-name">AWS Certified Solutions Architect – Associate</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">⚙️</div>
+        <div>
+          <div class="cert-name">AWS Certified DevOps Engineer – Professional</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🤖</div>
+        <div>
+          <div class="cert-name">Carbon Tensor AI / MLOps Certification</div>
+          <div class="cert-issuer">Carbon Tensor</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🐳</div>
+        <div>
+          <div class="cert-name">Docker Certified Associate (DCA)</div>
+          <div class="cert-issuer">Docker, Inc.</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">☸️</div>
+        <div>
+          <div class="cert-name">Certified Kubernetes Administrator (CKA)</div>
+          <div class="cert-issuer">Cloud Native Computing Foundation</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🔐</div>
+        <div>
+          <div class="cert-name">HashiCorp Certified: Terraform Associate</div>
+          <div class="cert-issuer">HashiCorp</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="reveal">
+    <p class="section-label">Background</p>
+    <h2>Education</h2>
+    <div class="divider"></div>
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Bachelor of Science — Computer Science</div>
+        <div class="edu-school">University · 2016 – 2020</div>
+        <div class="edu-detail">Focus areas: Systems programming, networking, cloud computing fundamentals, and software engineering principles.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built by <span>Kirtan Patel</span> &nbsp;·&nbsp; DevOps Engineer &nbsp;·&nbsp; <span>kp@devops:~$</span> ▋</p>
+</footer>
+
+<script>
+  // Terminal typewriter
+  const lines = [
+    'DevOps Engineer',
+    'Cloud Infrastructure Architect',
+    'CI/CD Pipeline Builder',
+    'Kubernetes Administrator',
+    'Automation Enthusiast',
+  ];
+  let lineIdx = 0, charIdx = 0, deleting = false;
+  const el = document.getElementById('terminal-text');
+
+  function type() {
+    const current = lines[lineIdx];
+    if (!deleting) {
+      el.textContent = current.slice(0, ++charIdx);
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(type, 1800);
+        return;
+      }
+    } else {
+      el.textContent = current.slice(0, --charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        lineIdx = (lineIdx + 1) % lines.length;
+      }
+    }
+    setTimeout(type, deleting ? 40 : 75);
+  }
+  type();
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
