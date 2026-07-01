@@ -19,7 +19,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: 609554
-          password: ${{ secrets.DCOEKR_PASS }}
+          password: ${{ secrets.DOCKER_LOGIN }}
 
       - name: Push Docker image
         run: docker push 609554/cicd-portfolio:latest
