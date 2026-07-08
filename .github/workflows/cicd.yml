@@ -22,11 +22,11 @@ jobs:
           severity: HIGH,CRITICAL
           exit-code: '1'
       - name: Build Docker image
-        run: docker build -t 267673636159.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest .
+        run: docker build -t ${{ secrets.ECR_REPO }}/my-repo:v1 .
       - name: Scan Docker image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: 267673636159.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
+          image-ref: ${{ secrets.ECR_REPO }}/my-repo:v1
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
@@ -34,12 +34,12 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::267673636159:role/github-action
+          role-to-assume: ${{ secrets.ACTION_AWS_ROLE }}
           aws-region: us-east-1
       - name: Login to Amazon ECR 
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Push Docker image to Amazon ECR
-        run: docker push 267673636159.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
+        run: docker push ${{ secrets.ECR_REPO }}/my-repo:v1
         
