@@ -27,5 +27,8 @@ jobs:
           exit-code: '0'
           ignore-unfixed: true
           severity: HIGH,CRITICAL
-      - name: Push Docker image to ECR
-        run: echo "Pushing Docker image to ECR..."
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::267673636159:role/github-actions-role
+          aws-region: us-east-1
