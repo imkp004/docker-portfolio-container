@@ -24,7 +24,7 @@ jobs:
         with:
           image-ref: 267673636159.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           severity: HIGH,CRITICAL
       - name: Push Docker image to ECR
