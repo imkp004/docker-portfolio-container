@@ -1,0 +1,25 @@
+name: My-first-pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t 609554/cicd-portfolio:latest .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: 609554
+          password: ${{ secrets.DOCKER_LOGIN }}
+
+      - name: Push Docker image
+        run: docker push 609554/cicd-portfolio:latest
